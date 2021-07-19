@@ -37,19 +37,14 @@ public class UserDAO {
 		ds.writeObjectsToFile(users, filename);
 	}
 	public Users createUser(String username, String fName, String lName, UserType type) {
-		//log.trace("App has entered createUser.");
-		//log.debug("createUser Parameters: username: " + username + ", password: " + password + ", email: " + email
-		//		+ ", type: " + type);
+
 		if (username == null || username.isBlank() || fName == null || fName.isBlank() || lName == null
 				|| lName.isBlank()) {
 			return null;
 		}
 		Users newUser = new Users(users.size(), username, fName, lName, type); // Create the new user
-		//log.debug("newUser has been created: " + newUser);
 		users.add(newUser); // Add the new user to the list
-		//log.debug("New user was added to the list: " + users.contains(newUser));
-		//log.trace("App is now leaving createUser.");
-		//log.debug("createUser is returning User: " + newUser);
+
 		return newUser;
 	}
 	
@@ -72,29 +67,22 @@ public class UserDAO {
 	
 	public void writeToFile() {
 		new DataSerializer<Users>().writeObjectsToFile(users, filename);
-		//new Serializer<Users>().writeObjectsToFile(users, filename); // Call the serializer to write to the file
 
 	}
 	
 	public Boolean checkUsername(String username) {
-		//log.trace("App has entered checkUsername.");
-		//log.debug("checkUsername Parameters: username: " + username);
+
 		if (username == null || username.isBlank()) { // If the username entered was null or blank.
-			//log.warn("User entered a null or blank username");
-			//log.trace("App is leaving checkUsername.");
-			//log.debug("App is returning Boolean: " + false);
+
 			return false;
 		}
 		for (Users user : users) { // Iterate through the list of users.
 			if (username.equals(user.getUsername())) { // If the username has been taken
-				//log.debug(username + " has been found: " + user.getUsername());
-				//log.trace("App is now leaving checkUsername.");
-				//log.debug("checkUsername is returning Boolean: " + false);
+
 				return false;
 			}
 		}
-		//log.trace("App is now leaving checkUsername.");
-		//log.debug("checkUsername is returning Boolean: " + true);
+
 		return true; // Means the username is unique
 	}
 
