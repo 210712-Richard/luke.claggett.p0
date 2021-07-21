@@ -38,8 +38,8 @@ public class UserDAO {
 	}
 	public Users createUser(String username, String fName, String lName, UserType type) {
 
-		if (username == null || username.isBlank() || fName == null || fName.isBlank() || lName == null
-				|| lName.isBlank()) {
+		if (username == null || username.equals("") || fName == null || fName.equals("") || lName == null
+				|| lName.equals("")) {
 			return null;
 		}
 		Users newUser = new Users(users.size(), username, fName, lName, type); // Create the new user
@@ -72,7 +72,7 @@ public class UserDAO {
 	
 	public Boolean checkUsername(String username) {
 
-		if (username == null || username.isBlank()) { // If the username entered was null or blank.
+		if (username == null || username.equals("")) { // If the username entered was null or blank.
 
 			return false;
 		}

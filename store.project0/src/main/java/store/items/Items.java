@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class Items implements Serializable{
 	private Integer id;
-	private static String productName;
-	private static double productPrice;
-	private static Integer quantity; 
+	private String productName;
+	private double productPrice;
+	private Integer quantity; 
 
 public Items(Integer id, String productName, double productPrice, Integer quantity) {
 	this.id = id;

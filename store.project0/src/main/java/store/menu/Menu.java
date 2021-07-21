@@ -29,12 +29,9 @@ public void start() {
 			if (activeUser == null) { // If the user was not found.
 				System.out.println("Login details did not match, please try again.\n");
 			} else if (activeUser.getType() == UserType.CUSTOMER) { // User is a customer
-				System.out.println("Customer");
 				customerMenu();
 				break;
 			} else if (activeUser.getType() == UserType.EMPLOYEE) { // User is a manager
-
-				System.out.println("Employee");
 				employeeMenu();
 				break;
 			}
@@ -52,6 +49,7 @@ public void start() {
 			break mainLoop;
 		case 4:
 			JOptionPane.showMessageDialog(null, "Please enter a valid number between 1 and 3", "Project 0 Book Store", JOptionPane.ERROR_MESSAGE);
+			continue;
 
 		}
 	}
@@ -107,29 +105,26 @@ private void customerMenu() {
 			String output = "";
 			for (int i = 0; i < itemList.size(); i++) {
 				Items item = itemList.get(i);
-				output +=("\t" + "Name: " + item.getProductName() + " Price " + item.getProductPrice() + " Quanity " + item.getQuantity());
+				output +=("\n" + (item.getID()+1)  + ": Name: " + item.getProductName() + " Price " + item.getProductPrice() + " Quanity " + item.getQuantity());
 			}
-			System.out.println(output);
-			
-			
-//			JOptionPane.showMessageDialog(null, "Login", "Project 0 Book Store", JOptionPane.INFORMATION_MESSAGE);
-//			String userInput = JOptionPane.showInputDialog("Please enter your username.");
-//			
-//			activeUser = us.login(userInput); // Will check if the user exists.
-//
-//			if (activeUser == null) { // If the user was not found.
-//				System.out.println("Login details did not match, please try again.\n");
-//			} else if (activeUser.getType() == UserType.CUSTOMER) { // User is a customer
-//				System.out.println("Customer");
-//				break;
-//			} else if (activeUser.getType() == UserType.EMPLOYEE) { // User is a manager
-//
-//				System.out.println("Employee");
-//				break;
-//			}
-//			 else { // Somehow, the user is none of those things.
-//				System.out.println("There is a problem with your account. Please contact an administrator.");
-//			}
+			Integer userPurchase = Integer.parseInt(JOptionPane.showInputDialog("What would you like to purchase?\n "
+					+ output));
+			userPurchase--;
+			Items item = itemList.get(userPurchase);
+			System.out.println(userPurchase);
+			if (userPurchase < 0 || userPurchase > (itemList.size())) {
+				JOptionPane.showMessageDialog(null, "Incorrect selection", "Project 0 book store", JOptionPane.ERROR_MESSAGE);
+			}
+			else {
+				Integer userPurchaseQuantity = Integer.parseInt(JOptionPane.showInputDialog(null, "How many would you like to buy", "Project 0 book store", JOptionPane.INFORMATION_MESSAGE));
+				if ((userPurchaseQuantity > (item.getQuantity()) || userPurchaseQuantity < 0)) {
+				JOptionPane.showMessageDialog(null, "Incorrect quantity", "Project 0 book store", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					System.out.println("Good");
+				}
+
+			}
 			break;
 			
 		case 2:
@@ -149,12 +144,13 @@ private void customerMenu() {
 }
 
 private int customerInputMenu() {
+	List<Items> itemList = us.getBooks();
 	try {
 		Integer userChoice = Integer.parseInt(JOptionPane.showInputDialog("What would you like to do today?\n "
 																			+ "1. Purchase products.\n "
 																			+ "2. Null. \n "
 																			+ "3. Leave our customer menu."));
-		if (userChoice <1 || userChoice >3) {
+		if (userChoice <1 || userChoice > 3) {
 			return 4;
 		}
 		else {
@@ -165,7 +161,7 @@ private int customerInputMenu() {
 			JOptionPane.showMessageDialog(null, "Please enter a valid number between 1 and 3", "Project 0 Book Store", JOptionPane.ERROR_MESSAGE);
 			
 		}
-		return (Integer) null;
+		return 4;
 }
 		
 private int employeeInputMenu() {
@@ -183,9 +179,8 @@ Integer userChoice = Integer.parseInt(JOptionPane.showInputDialog("What would yo
 }
 	catch (Exception Ex) {
 		JOptionPane.showMessageDialog(null, "Please enter a valid number between 1 and 3", "Project 0 Book Store", JOptionPane.ERROR_MESSAGE);
-		
 	}
-	return (Integer) null;
+	return 4;
 }
 
 private int startMenu() {
@@ -219,10 +214,10 @@ private static void createAccount(UserType type) {
 
 		
 		if (!us.isUsernameUnique(newUsername)) {
-			if (!us.isUsernameUnique(newUsername) && (newUsername.isBlank())) {
+			if (!us.isUsernameUnique(newUsername) && (newUsername.equals(""))) {
 				System.out.println("NO NULL");
 			}
-			else if (!newUsername.isBlank() ) {
+			else if (!newUsername.equals("") ) {
 			System.out.println(newUsername + " is already is use. Please try again.\n");
 		}
 	}
@@ -231,22 +226,19 @@ private static void createAccount(UserType type) {
 	
 	do {
 		fName = JOptionPane.showInputDialog("Please enter your first name.");
-			if (fName.isBlank()) {
+			if (fName.equals("")) {
 				System.out.println("NO NULL fname");
 			}
 	}
- while (fName.isBlank());
+ while (fName.equals(""));
 	do {
 		lName = JOptionPane.showInputDialog("Please enter your last name.");
-			if (lName.isBlank()) {
+			if (lName.equals("")) {
 				System.out.println("NO NULL lname");
 			}
 	}
- while (lName.isBlank());
-
-	System.out.println("Please enter a password:");
-	System.out.println("Please enter an email address:");
-
+ while (lName.equals(""));
+	JOptionPane.showMessageDialog(null, "Succesfully registering your account, going back to main screen","Project 0 book store", JOptionPane.INFORMATION_MESSAGE);
 	System.out.println("Registering your account...");
 
 	// This will create the new customer account.
@@ -263,10 +255,10 @@ private static Items createBook() {
 
 		
 		if (!ItemDAO.checkBookName(newBookName)) {
-			if (!us.isUsernameUnique(newBookName) && (newBookName.isBlank())) {
+			if (!us.isUsernameUnique(newBookName) && (newBookName.equals(""))) {
 				System.out.println("NO NULL");
 			}
-			else if (!newBookName.isBlank() ) {
+			else if (!newBookName.equals("")) {
 			System.out.println(newBookName + " is already is use. Please try again.\n");
 		}
 	}
@@ -275,7 +267,6 @@ private static Items createBook() {
 	while (true) {
 		try {
 			price = Double.parseDouble(JOptionPane.showInputDialog("Please enter the book price."));
-			quantity = Integer.parseInt(JOptionPane.showInputDialog("Please enter the book quantity."));
 			break;
 		}
 		catch (Exception ex) {
@@ -283,12 +274,18 @@ private static Items createBook() {
 		}
 		
 	}
-
-
-	System.out.println("Please enter a password:");
-	System.out.println("Please enter an email address:");
-
-	System.out.println("Registering your book...");
+	
+	while (true) {
+		try {
+			quantity = Integer.parseInt(JOptionPane.showInputDialog("Please enter the book quantity."));
+			break;
+		}
+		catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "Please enter a valid quantity", "Project 0 book store", JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	JOptionPane.showMessageDialog(null, "Registering your book succesfully", "Project 0 book store", JOptionPane.INFORMATION_MESSAGE);
 
 	// This will create the new customer account.
 

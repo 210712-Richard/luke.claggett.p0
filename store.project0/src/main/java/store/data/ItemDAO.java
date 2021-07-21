@@ -34,13 +34,13 @@ public class ItemDAO {
 	}
 	public Items createBook(String bookName, Double price, Integer quantity) {
 
-		if (bookName == null || bookName.isBlank() || price == null || quantity == null) {
+		if (bookName == null || bookName.equals("") || price == null || quantity == null) {
 			return null;
 		}
-		Items newUser = new Items(items.size(), bookName, price, quantity); // Create the new user
-		items.add(newUser); // Add the new user to the list
+		Items newItem = new Items(items.size(), bookName, price, quantity); // Create the new user
+		items.add(newItem); // Add the new user to the list
 
-		return newUser;
+		return newItem;
 	}
 	
 	public static Items getBook(Integer id) {
@@ -71,7 +71,7 @@ public class ItemDAO {
 	
 	public static Boolean checkBookName(String bookName) {
 
-		if (bookName == null || bookName.isBlank()) { // If the username entered was null or blank.
+		if (bookName == null || bookName.equals("")) { // If the username entered was null or blank.
 
 			return false;
 		}
