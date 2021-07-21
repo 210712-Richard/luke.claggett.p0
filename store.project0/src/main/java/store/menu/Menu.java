@@ -122,6 +122,10 @@ private void customerMenu() {
 				}
 				else {
 					System.out.println("Good");
+					item.setQuantity(item.getQuantity() - userPurchaseQuantity);
+					if (item.getQuantity() == 0) {
+						item.setID(null);item.setProductName(null);item.setProductPrice(null);item.setQuantity(null);
+					}
 				}
 
 			}

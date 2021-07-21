@@ -54,6 +54,9 @@ public class ItemDAO {
 		return null;
 	}
 	
+	public void removeBook(Integer id) {
+	}
+	
 	public static List<Items> getBooks() {
 		return items;
 	}
