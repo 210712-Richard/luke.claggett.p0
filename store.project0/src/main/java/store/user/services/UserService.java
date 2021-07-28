@@ -26,7 +26,20 @@ public class UserService {
 
 		return u; //Return the new user object.
 	}
-	
+	public void removeBook(Integer quantity, Integer purchaseQuantity, Integer purchaseSelection) {
+		List<Items> itemList = getBooks();
+		Items item = itemList.get(purchaseSelection);
+		if ((quantity - purchaseQuantity) == 0) {
+			System.out.println(purchaseSelection);
+			item.setQuantity(quantity - purchaseQuantity);
+			id.removeBook(purchaseSelection);
+		}
+		else {
+			item.setQuantity(quantity - purchaseQuantity);
+		}
+		id.writeToFile();
+		itemList = getBooks();
+	}
 	public Items registerBook(String bookName, Double price, Integer quantity) {
 		Items i = id.createBook(bookName, price, quantity); //Sends the parameters to the DAO to create a new user
 		id.writeToFile(); //Save the new user to file.

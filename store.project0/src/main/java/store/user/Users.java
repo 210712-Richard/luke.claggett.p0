@@ -16,6 +16,9 @@ public Users(Integer id, String username, String fName, String lName, UserType t
 	this.lName = lName;
 	this.type = type;
 }
+public Users() {
+	super();
+}
 
 public Integer getID() {
 	return id;

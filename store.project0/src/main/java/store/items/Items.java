@@ -14,6 +14,9 @@ public Items(Integer id, String productName, double productPrice, Integer quanti
 	this.productPrice = productPrice;
 	this.quantity = quantity;
 }
+public Items() {
+	super();
+}
 
 public Integer getID() {
 	return id;

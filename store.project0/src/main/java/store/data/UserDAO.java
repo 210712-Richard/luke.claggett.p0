@@ -59,6 +59,10 @@ public class UserDAO {
 		return null;
 	}
 	
+	public List<Users> getUsers() {
+		return users;
+	}
+	
 	public void updateUser(Users user) {
 		// due to us holding the entire list in memory, we will actually automatically update the user
 		// in the list anytime we change the fields of the user object.

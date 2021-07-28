@@ -7,8 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 public class DataSerializer<T> {
-
+	
 	public List<T> readObjectsFromFile(String filename) {
 		List<T> objects = null;
 		try(ObjectInputStream o = new ObjectInputStream(new FileInputStream(filename));){

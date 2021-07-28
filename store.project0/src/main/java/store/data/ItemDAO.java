@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import store.items.Items;
+import store.user.services.UserService;
 
 public class ItemDAO {
 	// DAO = Database Access Object
@@ -25,12 +26,13 @@ public class ItemDAO {
 			ds.writeObjectsToFile(items, filename);
 		}
 	}
-	public void addBook(Items i) {
+	public Items addBook(Items i) {
 		DataSerializer<Items> ds = new DataSerializer<Items>();
 		items = ds.readObjectsFromFile(filename);
 
 		items.add(i);
 		ds.writeObjectsToFile(items, filename);
+		return null;
 	}
 	public Items createBook(String bookName, Double price, Integer quantity) {
 
@@ -54,7 +56,13 @@ public class ItemDAO {
 		return null;
 	}
 	
-	public void removeBook(Integer id) {
+	public void removeBook(Integer selection) {
+		DataSerializer<Items> ds = new DataSerializer<Items>();
+		items = ds.readObjectsFromFile(filename);
+		System.out.println(selection);
+		System.out.println("D");
+		items.remove(getBook(selection));
+		writeToFile();
 	}
 	
 	public static List<Items> getBooks() {

@@ -1,5 +1,7 @@
 package store.menu;
 import java.util.List;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
@@ -11,6 +13,7 @@ import store.data.ItemDAO;
 import store.items.Items;
 
 public class Menu {
+
 	private static Users activeUser = null; // The current logged in user
 	private static UserService us = new UserService(); // Used to modify user states
 
@@ -102,6 +105,7 @@ private void customerMenu() {
 		case 1:
 			//Get a list of items, and allow customer to purchase.
 			List<Items> itemList = us.getBooks();
+			ItemDAO itemDAO = new ItemDAO();
 			String output = "";
 			for (int i = 0; i < itemList.size(); i++) {
 				Items item = itemList.get(i);
@@ -122,10 +126,8 @@ private void customerMenu() {
 				}
 				else {
 					System.out.println("Good");
-					item.setQuantity(item.getQuantity() - userPurchaseQuantity);
-					if (item.getQuantity() == 0) {
-						item.setID(null);item.setProductName(null);item.setProductPrice(null);item.setQuantity(null);
-					}
+					System.out.println(item.getQuantity() + " " + userPurchaseQuantity + " " + userPurchase);
+					us.removeBook(item.getQuantity(), userPurchaseQuantity, userPurchase);
 				}
 
 			}
